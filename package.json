@@ -1,0 +1,19 @@
+{
+  "name": "batalha-de-kaly",
+  "version": "1.0.0",
+  "description": "Servidor para jogo Batalha de Kaly",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davi-pinheiro/Batalha-de-Kaly.git"
+  },
+  "author": "davi-pinheiro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davi-pinheiro/Batalha-de-Kaly/issues"
+  },
+  "homepage": "https://github.com/davi-pinheiro/Batalha-de-Kaly#readme"
+}
