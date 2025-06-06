@@ -9,8 +9,8 @@ ws_server.on('connection', (ws_client)=>
 {
     ws_client.on('message', (message)=>
     {
-        console.log(message);
-        ws_client.send('Ouvido');
+        console.log(message.toString());
+        ws_client.send.toString('Ouvido');
     })
 })
 

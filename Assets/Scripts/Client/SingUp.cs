@@ -10,6 +10,8 @@ public class SingUp : MonoBehaviour
 {
     int state = 0;
 
+    [SerializeField] GameController game_controller;
+
     [SerializeField] TMP_InputField email;
     [SerializeField] TMP_InputField username;
     [SerializeField] TMP_InputField password;
@@ -89,7 +91,15 @@ public class SingUp : MonoBehaviour
         }
         else
         {
-            email_address_warning.text = "Invalid email address";
+            if (email.text == "")
+            {
+                email_address_warning.text = "Enter email address";
+            }
+            else
+            {
+                email_address_warning.text = "Invalid email address";
+            }
+            
             Change_State(1);
         }
     }
@@ -105,7 +115,8 @@ public class SingUp : MonoBehaviour
         if (isUserValid && isPasswordValid)
         {
             user_password.SetActive(false);
-            SceneManager.LoadScene("Global Lobby");
+            game_controller.GetCredentials(email.text, username.text, password.text);
+            game_controller.Change_Scene("Global Lobby");
         }
     }
 
