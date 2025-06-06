@@ -1,28 +1,36 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using System;
-using Unity.VisualScripting;
-using System.Linq;
+using EmailValidation;
+using UnityEngine.UIElements;
+using TMPro.EditorUtilities;
+using UnityEngine.SceneManagement;
 
 public class SingUp : MonoBehaviour
 {
-    bool valid = false;
-    string special_characters = "!#$%&'*+-/=?^_{|}~`.";
-    string email_username, email_domain;
+    int state = 0;
+
     [SerializeField] TMP_InputField email;
     [SerializeField] TMP_InputField username;
     [SerializeField] TMP_InputField password;
     [SerializeField] TMP_InputField password_confirm;
+    [SerializeField] TMP_Text email_address_warning;
+    [SerializeField] TMP_Text user_password_warning;
+    [SerializeField] GameObject start;
+    [SerializeField] GameObject email_address;
+    [SerializeField] GameObject user_password;
 
-    [SerializeField] TMP_Text warning;
-
-    bool initial_or_final_dot_constraint()
+    void Start()
     {
-        email_username = email.text.Substring(0, email.text.IndexOf('@'));
-
-        if (email_username[0] == special_characters[1] || email_username[email_username.Length - 1] == special_characters[1])
+        start.SetActive(true);
+        email_address.SetActive(false);
+        user_password.SetActive(false);
+    }
+    bool Check_User()
+    {
+        if (username.text == "")
         {
+            user_password_warning.text = "Missing usename";
             return false;
         }
         else
@@ -31,95 +39,98 @@ public class SingUp : MonoBehaviour
         }
     }
 
-    bool consecutive_special_characters_constraint()
+    bool Check_Password()
     {
-        for (int i = 0; i < email_username.Length; i++)
-        {
-            for (int j = 0; j < special_characters.Length; j++)
-            {
-                if (email_username[i] == special_characters[j])
-                {
-                    for (int k = 0; k < special_characters.Length; k++)
-                    {
-                        if (i == 0)
-                        {
-                            if (email_username[i + 1] == special_characters[k])
-                            {
-                                return false;
-                            }
-                        }
-                        else if (i == email_username.Length - 1)
-                        {
-                            if (email_username[i - 1] == special_characters[k])
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            if (email_username[i + 1] == special_characters[k] ||
-                                email_username[i - 1] == special_characters[k])
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-                
-            //a-a-b-.a
-        }
-        return true;
-    }
 
-    bool validate_email_username()
-    {
-        if (initial_or_final_dot_constraint() &&
-            consecutive_special_characters_constraint())
+        if (password.text == "")
         {
-            return true;
+            user_password_warning.text = "Enter password";
+            return false;
+        }
+        else if (password_confirm.text == "")
+        {
+            user_password_warning.text = "Invalid password confirm";
+            return false;
         }
         else
         {
-            return false;
-        }
-    }
-    bool validate_email_domain()
-    {
-        email_domain = email.text.Substring(email.text.IndexOf('@') + 1);
-        return true;
-    }
-
-    public void validate_email()
-    {
-        validate_email_username();
-        validate_email_domain();
-
-        if (email.text.Contains('@'))
-        {
-            if (validate_email_username() && validate_email_domain())
+            if (password.text == password_confirm.text)
             {
-                valid = true;
+                return true;
             }
             else
             {
-                valid = false;
+                user_password_warning.text = "Invalid password";
+                return false;
             }
         }
+
+        
+    }
+
+    public void Change_State(int value)
+    {
+        if (value < 3)
+        {
+            state = value;
+        }
+    }
+
+    public void Email_Validation()
+    {
+        bool isEmailValid = EmailValidator.Validate(email.text);
+
+        if (isEmailValid)
+        {
+            email_address_warning.text = "";
+            email_address.SetActive(false);
+            user_password.SetActive(true);
+            Change_State(2);
+        }
         else
         {
-            valid = false;
+            email_address_warning.text = "Invalid email address";
+            Change_State(1);
         }
+    }
 
-        if (valid == false)
-        {
-            warning.text = "Email inválido";
-        }
-        else
-        {
-            warning.text = "";
-        }
+    public void Password_Validation()
+    {
+        bool isUserValid, isPasswordValid;
 
-        Debug.Log(valid);
+        isUserValid = Check_User();
+
+        isPasswordValid = Check_Password();
+
+        if (isUserValid && isPasswordValid)
+        {
+            user_password.SetActive(false);
+            SceneManager.LoadScene("Global Lobby");
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            switch (state)
+            {
+                case 0:
+                    Change_State(1);
+                    start.SetActive(false);
+                    email_address.SetActive(true);
+                    break;
+                case 1:
+                    Change_State(2);
+                    Email_Validation();
+                    break;
+                case 2:
+                    Password_Validation();
+                    break;
+                default:
+                    break;
+                
+            }
+        }
     }
 }

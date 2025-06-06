@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Cadastro.unity
+    guid: 5661f6c1000b5c5698cf8b121c68ef05
+  - enabled: 1
+    path: Assets/Scenes/Global Lobby.unity
+    guid: 3c7af087d3a252761b91f84d86495e9a
   m_configObjects: {}

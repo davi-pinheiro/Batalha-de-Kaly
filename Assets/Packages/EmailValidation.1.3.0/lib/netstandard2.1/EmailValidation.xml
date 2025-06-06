@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EmailValidation</name>
+    </assembly>
+    <members>
+        <member name="T:EmailValidation.EmailValidationError">
+            <summary>
+            An email validation error.
+            </summary>
+            <remarks>
+            Represents an email validation error, containing information about the type of error
+            and the index of the offending character.
+            </remarks>
+        </member>
+        <member name="F:EmailValidation.EmailValidationError.None">
+            <summary>
+            A special instance of <see cref="T:EmailValidation.EmailValidationError"/> that indicates no error.
+            </summary>
+            <remarks>
+            A special instance of <see cref="T:EmailValidation.EmailValidationError"/> that indicates no error.
+            </remarks>
+        </member>
+        <member name="M:EmailValidation.EmailValidationError.#ctor(EmailValidation.EmailValidationErrorCode,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Initializes a new instance of the <see cref="T:EmailValidation.EmailValidationError"/> class.
+            </summary>
+            <remarks>
+            Creates a new <see cref="T:EmailValidation.EmailValidationError"/>.
+            </remarks>
+            <param name="code">The error code.</param>
+            <param name="tokenIndex">The character index indicating the starting position of the token that had the syntax error.</param>
+            <param name="errorIndex">The character index indicating the position of the syntax error.</param>
+        </member>
+        <member name="P:EmailValidation.EmailValidationError.Code">
+            <summary>
+            Get the email validation error code.
+            </summary>
+            <remarks>
+            Gets the email validation error code.
+            </remarks>
+            <value>The email validation error code.</value>
+        </member>
+        <member name="P:EmailValidation.EmailValidationError.TokenIndex">
+            <summary>
+            Get the character index indicating the starting position of the token that had the syntax error.
+            </summary>
+            <remarks>
+            Gets the character index indicating the starting position of the token that had the syntax error.
+            </remarks>
+            <value>The character index indicating the starting position of the token that had the syntax error.</value>
+        </member>
+        <member name="P:EmailValidation.EmailValidationError.ErrorIndex">
+            <summary>
+            Get the character index indicating the position of the syntax error.
+            </summary>
+            <remarks>
+            Gets the character index indicating the position of the syntax error.
+            </remarks>
+            <value>The character index indicating the position of the syntax error.</value>
+        </member>
+        <member name="T:EmailValidation.EmailValidationErrorCode">
+            <summary>
+            An enumeration of possible email address validation error codes.
+            </summary>
+            <remarks>
+            An enumeration of possible email address validation error codes.
+            </remarks>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.None">
+            <summary>
+            No error.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.EmptyAddress">
+            <summary>
+            The email address is empty.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.AddressTooLong">
+            <summary>
+            The email address exceeds the maximum length of 254 characters.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.UnterminatedQuotedString">
+            <summary>
+            The local-part of the email address contains an unterminated quoted-string.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.InvalidLocalPartCharacter">
+            <summary>
+            The local-part of the email address contains an invalid character.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.IncompleteLocalPart">
+            <summary>
+            The local-part of the email address is incomplete.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.LocalPartTooLong">
+            <summary>
+            The local-part of the email address exceeds the maximum length of 64 characters.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.DomainTooLong">
+            <summary>
+            The domain of the email address exceeds the maximum length of 253 characters.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.DomainLabelTooLong">
+            <summary>
+            A domain label (subdomain) of the email address exceeds the maximum length of 63 characters.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.InvalidDomainCharacter">
+            <summary>
+            The domain of the email address contains an invalid character.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.IncompleteDomain">
+            <summary>
+            The domain of the email address is incomplete.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.IncompleteDomainLabel">
+            <summary>
+            A domain label (subdomain) of the email address is incomplete.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.InvalidIPAddress">
+            <summary>
+            The IP address literal is incomplete.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.UnterminatedIPAddressLiteral">
+            <summary>
+            The IP address literal of the email address is missing the closing ']'.
+            </summary>
+        </member>
+        <member name="F:EmailValidation.EmailValidationErrorCode.UnexpectedCharactersAfterDomain">
+            <summary>
+            The email address contains unexpected characters after the end of the domain.
+            </summary>
+        </member>
+        <member name="T:EmailValidation.EmailAttribute">
+            <summary>
+            An attribute that validates the syntax of an email address.
+            </summary>
+            <remarks>
+            An attribute that validates the syntax of an email address.
+            </remarks>
+        </member>
+        <member name="M:EmailValidation.EmailAttribute.#ctor(System.Boolean,System.Boolean)">
+            <summary>
+            Instantiates a new instance of <see cref="T:EmailValidation.EmailAttribute"/>.
+            </summary>
+            <remarks>
+            Creates a new <see cref="T:EmailValidation.EmailAttribute"/>.
+            </remarks>
+            <param name="allowTopLevelDomains"><c>true</c> if the validator should allow addresses at top-level domains; otherwise, <c>false</c>.</param>
+            <param name="allowInternational"><c>true</c> if the validator should allow international characters; otherwise, <c>false</c>.</param>
+        </member>
+        <member name="M:EmailValidation.EmailAttribute.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Instantiates a new instance of <see cref="T:EmailValidation.EmailAttribute"/>.
+            </summary>
+            <remarks>
+            Creates a new <see cref="T:EmailValidation.EmailAttribute"/>.
+            </remarks>
+            <param name="errorMessage">The error message to use when validation fails.</param>
+            <param name="allowTopLevelDomains"><c>true</c> if the validator should allow addresses at top-level domains; otherwise, <c>false</c>.</param>
+            <param name="allowInternational"><c>true</c> if the validator should allow international characters; otherwise, <c>false</c>.</param>
+        </member>
+        <member name="M:EmailValidation.EmailAttribute.#ctor(System.Func{System.String},System.Boolean,System.Boolean)">
+            <summary>
+            Instantiates a new instance of <see cref="T:EmailValidation.EmailAttribute"/>.
+            </summary>
+            <remarks>
+            Creates a new <see cref="T:EmailValidation.EmailAttribute"/>.
+            </remarks>
+            <param name="errorMessageAccessor">The <see cref="T:System.Func`1" /> that will return an error message.</param>
+            <param name="allowTopLevelDomains"><c>true</c> if the validator should allow addresses at top-level domains; otherwise, <c>false</c>.</param>
+            <param name="allowInternational"><c>true</c> if the validator should allow international characters; otherwise, <c>false</c>.</param>
+        </member>
+        <member name="P:EmailValidation.EmailAttribute.AllowTopLevelDomains">
+            <summary>
+            Get or set whether or not the validator should allow top-level domains.
+            </summary>
+            <remarks>
+            Gets or sets whether or not the validator should allow top-level domains.
+            </remarks>
+            <value><c>true</c> if top-level domains should be allowed; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:EmailValidation.EmailAttribute.AllowInternational">
+            <summary>
+            Get or set whether or not the validator should allow international characters.
+            </summary>
+            <remarks>
+            Gets or sets whether or not the validator should allow international characters.
+            </remarks>
+            <value><c>true</c> if international characters should be allowed; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:EmailValidation.EmailAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            Validates the value.
+            </summary>
+            <remarks>
+            Checks whether or not the email address provided is syntactically correct.
+            </remarks>
+            <returns>The validation result.</returns>
+            <param name="value">The value to validate.</param>
+            <param name="validationContext">The validation context.</param>
+        </member>
+        <member name="M:EmailValidation.EmailAttribute.IsValid(System.Object)">
+            <summary>
+            Validates the value.
+            </summary>
+            <remarks>
+            Checks whether or not the email address provided is syntactically correct.
+            </remarks>
+            <returns><c>true</c> if the value is a valid email address; otherwise, <c>false</c>.</returns>
+            <param name="value">The value to validate.</param>
+        </member>
+        <member name="T:EmailValidation.EmailValidator">
+            <summary>
+            An Email validator.
+            </summary>
+            <remarks>
+            An Email validator.
+            </remarks>
+        </member>
+        <member name="M:EmailValidation.EmailValidator.TryValidate(System.String,System.Boolean,System.Boolean,EmailValidation.EmailValidationError@)">
+            <summary>
+            Validate the specified email address.
+            </summary>
+            <remarks>
+            <para>Validates the syntax of an email address.</para>
+            <para>If <paramref name="allowTopLevelDomains"/> is <c>true</c>, then the validator will
+            allow addresses with top-level domains like <c>postmaster@dk</c>.</para>
+            <para>If <paramref name="allowInternational"/> is <c>true</c>, then the validator
+            will use the newer International Email standards for validating the email address.</para>
+            </remarks>
+            <returns><c>true</c> if the email address is valid; otherwise, <c>false</c>.</returns>
+            <param name="email">An email address.</param>
+            <param name="allowTopLevelDomains"><c>true</c> if the validator should allow addresses at top-level domains; otherwise, <c>false</c>.</param>
+            <param name="allowInternational"><c>true</c> if the validator should allow international characters; otherwise, <c>false</c>.</param>
+            <param name="error">The error if the email address is invalid.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="email"/> is <c>null</c>.
+            </exception>
+        </member>
+        <member name="M:EmailValidation.EmailValidator.Validate(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Validate the specified email address.
+            </summary>
+            <remarks>
+            <para>Validates the syntax of an email address.</para>
+            <para>If <paramref name="allowTopLevelDomains"/> is <c>true</c>, then the validator will
+            allow addresses with top-level domains like <c>postmaster@dk</c>.</para>
+            <para>If <paramref name="allowInternational"/> is <c>true</c>, then the validator
+            will use the newer International Email standards for validating the email address.</para>
+            </remarks>
+            <returns><c>true</c> if the email address is valid; otherwise, <c>false</c>.</returns>
+            <param name="email">An email address.</param>
+            <param name="allowTopLevelDomains"><c>true</c> if the validator should allow addresses at top-level domains; otherwise, <c>false</c>.</param>
+            <param name="allowInternational"><c>true</c> if the validator should allow international characters; otherwise, <c>false</c>.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="email"/> is <c>null</c>.
+            </exception>
+        </member>
+    </members>
+</doc>
